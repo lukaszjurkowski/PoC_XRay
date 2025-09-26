@@ -1,12 +1,12 @@
 import { _android, test } from '@playwright/test';
 import dotenv from 'dotenv';
 //import testData from "../test_data/slc_course_funding.json";
-import testData from "../../test_data/slc_test_data.json";
+import testData from "../test_data/slc_test_data.json";
 //import { loginToSLCPortal } from '../actions/loginToSLCPortal';
-import { loginToSLCPortal_PG } from '../../actions/lle-flow/loginToSLCPortal_PG';
-import { cleanPreviousApplication } from '../../actions/lle-flow/cleanPreviousApplication';
-import { createNewApplication } from '../../actions/lle-flow/createNewApplication';
-import { registerAccount } from '../../actions/registration/registerAccount';
+import { loginToSLCPortal_PG } from '../actions/lle-flow/loginToSLCPortal_PG';
+import { cleanPreviousApplication } from '../actions/lle-flow/cleanPreviousApplication';
+import { createNewApplication } from '../actions/lle-flow/createNewApplication';
+import { registerAccount } from '../actions/registration/registerAccount';
 
 dotenv.config();
 

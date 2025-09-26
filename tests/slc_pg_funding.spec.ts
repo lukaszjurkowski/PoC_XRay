@@ -1,20 +1,20 @@
 import { _android, test } from '@playwright/test';
 import dotenv from 'dotenv';
-import testData from "../../test_data/slc_test_data.json";
-import { loginToSLCPortal_PG } from '../../actions/lle-flow/loginToSLCPortal_PG';
-import { createNewPGApplication } from '../../actions/pg-flow/createNewPGApplication';
-import { goThroughPreamble } from '../../actions/pg-flow/goThroughPreamble';
-import { fillPreviousStudy } from '../../actions/pg-flow/fillPreviousStudy';
-import { fillYourCourse } from '../../actions/pg-flow/fillYourCourse';
-import { confirmResidency } from '../../actions/pg-flow/confirmResidency';
-import { fillOrdinaryResidencyDetails } from '../../actions/pg-flow/fillOrdinaryResidencyDetails';
-import { confirmAboutYou } from '../../actions/pg-flow/confirmAboutYou';
-import { confirmPGMastersLoan } from '../../actions/pg-flow/confirmPGMastersLoan';
-import { fillAdditionalContact } from '../../actions/pg-flow/fillAdditionalContact';
-import { fillBankDetails } from '../../actions/pg-flow/fillBankDetails';
-import { confirmNationalInsuranceNumber } from '../../actions/pg-flow/confirmNationalInsuranceNumber';
-import { submitApplicationSteps } from '../../actions/pg-flow/submitApplicationSteps';
-import { registerAccount } from '../../actions/registration/registerAccount';
+import testData from "../test_data/slc_test_data.json";
+import { loginToSLCPortal_PG } from '../actions/lle-flow/loginToSLCPortal_PG';
+import { createNewPGApplication } from '../actions/pg-flow/createNewPGApplication';
+import { goThroughPreamble } from '../actions/pg-flow/goThroughPreamble';
+import { fillPreviousStudy } from '../actions/pg-flow/fillPreviousStudy';
+import { fillYourCourse } from '../actions/pg-flow/fillYourCourse';
+import { confirmResidency } from '../actions/pg-flow/confirmResidency';
+import { fillOrdinaryResidencyDetails } from '../actions/pg-flow/fillOrdinaryResidencyDetails';
+import { confirmAboutYou } from '../actions/pg-flow/confirmAboutYou';
+import { confirmPGMastersLoan } from '../actions/pg-flow/confirmPGMastersLoan';
+import { fillAdditionalContact } from '../actions/pg-flow/fillAdditionalContact';
+import { fillBankDetails } from '../actions/pg-flow/fillBankDetails';
+import { confirmNationalInsuranceNumber } from '../actions/pg-flow/confirmNationalInsuranceNumber';
+import { submitApplicationSteps } from '../actions/pg-flow/submitApplicationSteps';
+import { registerAccount } from '../actions/registration/registerAccount';
 
 dotenv.config();
 
