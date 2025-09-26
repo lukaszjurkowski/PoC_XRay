@@ -28,7 +28,9 @@ jobs:
         
     - name: Run Playwright functional tests
       run: |
-        npx playwright test ./tests/functional_tests/slc_pg_funding.spec.ts --reporter=json
+        # npx playwright test ./tests/functional_tests/slc_pg_funding.spec.ts --reporter=json
+        npx playwright test ./tests --reporter=json
+    
     
     # - name: Save report as artifact
     #   uses: actions/upload-artifact@v3
