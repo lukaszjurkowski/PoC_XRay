@@ -23,8 +23,9 @@ jobs:
     - name: Playwright installation
       run: |
         npm init -y
-        npm install -D @playwright/test
+        npm install -D @playwright/test@latest
         npx playwright install
+        npx @playwright/test --version
         
     - name: Run Playwright functional tests
       run: |
