@@ -1,9 +1,9 @@
 import { _android, expect, test } from '@playwright/test';
 import dotenv from 'dotenv';
 import testData from "../test_data/slc_course_funding.json";
-import { loginToSLCPortal } from '../actions/loginToSLCPortal';
-import { cleanPreviousApplication } from '../actions/cleanPreviousApplication';
-import { createNewApplication } from '../actions/createNewApplication';
+import { loginToSLCPortal } from '../actions/lle-flow/loginToSLCPortal';
+import { cleanPreviousApplication } from '../actions/lle-flow/cleanPreviousApplication';
+import { createNewApplication } from '../actions/lle-flow/createNewApplication';
 import { AccessibilityTestCase } from '../accessibility/accessibilityHandler';
 
 dotenv.config();
