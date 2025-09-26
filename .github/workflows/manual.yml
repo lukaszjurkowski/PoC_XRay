@@ -29,7 +29,8 @@ jobs:
         
     - name: Run Playwright functional tests
       run: |
-        npx playwright test --reporter=json
+        npx playwright test ./tests/functional_tests --reporter=json
+        # npx playwright test --reporter=json
     
     
     # - name: Save report as artifact
