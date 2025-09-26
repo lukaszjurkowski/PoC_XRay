@@ -1,0 +1,55 @@
+[
+
+    {
+        "name": "SLC PG funding flow 1",
+
+        "registrationTitle": "Mr.",
+        "registrationFirstName": "Tester",
+        "registrationLastName": "Testerski",
+        "registrationDayDOB": "10",
+        "registrationMonthDOB": "10",
+        "registrationYearDOB": "1980",
+        "registrationGender": "Male",
+        "registrationTownOfBirth": "Liverpool",
+        "registrationAddressLine1": "Anfield Road ",
+        "registrationTownOrCity": "Liverpool",
+        "registrationCountry": "United Kingdom",
+
+        "universityName": "Leeds",
+        "universityNameOnList": "University Of Leeds",
+        "expectedDisplayedUniversityName": "University Of Leeds",
+        "courseName": "Math",
+        "courseNameOnList": "simple course - full time",
+        "expectedDisplayedCourseName": "simple course - full time, 2 years",
+        "expectedDisplayedCourseNameInSummary": "simple course - full time, 2 years",
+
+        "postcodeOrdinaryResidency": "AA3 1AB",
+        "addressOrdinaryResidency": "4/1 220 Wallace Street‚ 4/1 220 Wallace Street 4/1 220 Wallace Street‚‚ G5 8AJ GB",
+        "addressTitleOrdinaryResidency": "4/1 220 Wallace Street, AA3 1AB",
+        "startDayOrdinaryResidency": "1",
+        "startMonthOrdinaryResidency": "9",
+        "startYearOrdinaryResidency": "2022",
+        "endDayOrdinaryResidency": "1",
+        "endMonthOrdinaryResidency": "9",
+        "endYearOrdinaryResidency": "2025",
+        "reasonToLiveOrdinaryResidency": "Lorem ipsum reasonum",
+        "summaryPageAddressOrdinaryResidency": "4/1 220 Wallace Street",
+        "summaryPageStartDateOrdinaryResidency": "1 September 2022",
+        "summaryPageEndDateOrdinaryResidency": "1 September 2025",
+
+        "previousAddressesSummaryOrdinaryResidency_old": "4/1 220 Wallace Street, City of Glasgow, United Kingdom, AA3 1AB",
+        "previousAddressesSummaryOrdinaryResidency": "4/1 220 Wallace Street",
+        "startEndDatesSummaryOrdinaryResidency": "1 September 2022 to 1 September 2025",
+
+        "expectedDisplayedLoanAmount": "",
+        "firstNameAdditionalContact": "John",
+        "expectedDisplayedFirstNameAdditionalContact": "John",
+        "lastNameAdditionalContact": "Doe",
+        "expectedDisplayedLastNameAdditionalContact": "Doe",
+        "relationAdditionalContact": "Father",
+        "expectedDisplayedRelationAdditionalContact": "Father",
+        "postcodeAdditionalContact": "NW10 1QR",
+        "expectedDisplayedAddressAdditionalContact": " 4/2 220 Wallace Street‚ Strathbungo South side‚ Stratchclyde"
+
+    }
+]

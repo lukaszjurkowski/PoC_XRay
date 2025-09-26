@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+    <style>
+        .violation-list {
+            display: none;
+        }
+
+        .violation-list ol {
+            margin-bottom: 0;
+        }
+
+        body {
+            padding: 2rem;
+        }
+
+        .step-context-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            float: right;
+        }
+
+        .step-context-menu li {
+            display: inline-block;
+        }
+
+        .step-context-menu li a {
+            display: inline-block;
+            padding: 0;
+            padding-left: 7px;
+        }
+
+        @media (min-width: 768px) {
+            .modal-xl {
+                width: 90%;
+                max-width: 900px;
+            }
+
+            .modal-max {
+                max-width: calc(100% - 3.5rem);
+            }
+        }
+
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .status-text {
+            font-weight: bold;
+        }
+
+        p {
+            margin-top: 0.3rem;
+            margin-bottom: 0.6rem;
+        }
+
+        li {
+            line-height: 1.618;
+        }
+
+        /* migration from bootstrap 4 to 5 */
+
+        .button-more {
+            text-decoration: none;
+        }
+
+        .table>:not(caption)>*>* {
+            padding: .75rem .75rem;
+        }
+
+        /*********************************/
+
+        .leftbordered-list li {
+            padding-left: .5rem;
+            border-left: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+            margin-bottom: 1rem;
+            margin-top: .75rem;
+        }
+
+        .leftbordered-list li h3 {
+            margin-bottom: .5rem;
+            margin-top: .5rem;
+        }
+
+        .nodes-actions {
+            width: 100%;
+            font-size: .8rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            float: right;
+            margin-bottom: .5rem;
+        }
+
+        .nodes-actions li {
+            float: right;
+        }
+
+        .nodes-actions li a {
+            text-decoration: none;
+            padding: 0;
+            padding-left: 7px;
+        }
+
+        .nothing {
+            font-style: italic;
+            margin-top: 1.75rem;
+            margin-bottom: 1.75rem;
+            text-align: center;
+        }
+    </style>
+    <title>{{testName}} - accessibility test result summary</title>
+</head>
+
+<body>
+    <main role="main">
+        <h1>Accessibility test result summary{{#projectKey}} for {{.}}{{/projectKey}}</h1>
+
+        <table class="table table-bordered">
+            <tr>
+                <th scope="row">Test:</th>
+                <td>{{testName}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Status:</th>
+                <td>{{#isPassed}}<span class="text-success status-text">&#10003; Passed,</span>{{/isPassed}}
+                    {{^isPassed}}<span class="text-danger status-text">&#10007; Failed,</span>{{/isPassed}}
+
+                    {{#testCaseViolationCount}}
+                    {{testCaseViolationCount}} issues, occuring {{totalTestCaseViolationCount}} times in total
+                    {{/testCaseViolationCount}}
+
+                    {{^testCaseViolationCount}}no issues {{/testCaseViolationCount}}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Document generation date:</th>
+                <td>{{generatedDate}}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Project:</th>
+                <td>{{playwrightProject}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Active rule sets:</th>
+                <td>{{usedTags}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Allowed violation impact:</th>
+                <td>{{#allowedImpact}}{{.}}{{/allowedImpact}}
+                    {{^allowedImpact}}<i>none</i>{{/allowedImpact}}
+                </td>
+            </tr>
+        </table>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 45%">Step description</th>
+                    <th style="width: 50%">Test status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#testSteps}}
+                <tr>
+                    <th scope="row">
+                        {{i}}
+                    </th>
+                    <td>{{stepData.stepDescription}}</td>
+                    <td>
+                        <ul class="step-context-menu">
+                            {{#hasScreenshot}}
+                            <li><a href="#" role="button" data-bs-toggle="modal"
+                                    data-bs-target="#screenshot-step{{i}}"><i class="bi bi-image"></i></a></li>
+                            {{/hasScreenshot}}
+                            <li><a href="#" role="button" data-bs-toggle="modal" data-bs-target="#details-step{{i}}"><i
+                                        class="bi bi-info-circle"></i></a></li>
+                        </ul>
+
+                        {{#stepData.isPassed}}
+                        <span class="text-success status-text">&#10003; Passed,</span>
+                        {{/stepData.isPassed}}
+                        {{^stepData.isPassed}}
+                        <span class="text-danger status-text">&#10007; Failed,</span>
+                        {{/stepData.isPassed}}
+                        {{#violationTotalCount}}
+                        {{violationTypesCount}} issues, occuring {{violationTotalCount}} times in total
+                        <!--<a onclick="this.parentElement.getElementsByClassName('violation-list')[0].style.display = 'block'"
+                            href="#" class="button-more">&raquo;</a>
+                        <div class="violation-list">
+                            <ol>
+                                {{#stepData.axeResults.violations}}
+                                <li><a href="{{helpUrl}}">{{help}}</a> - {{impact}}, occured {{nodes.length}} times</li>
+                                {{/stepData.axeResults.violations}}
+                            </ol> -->
+                        </div>
+                        {{/violationTotalCount}}
+                        {{^violationTotalCount}}no issues {{/violationTotalCount}}
+                    </td>
+                </tr>
+                {{/testSteps}}
+            </tbody>
+        </table>
+    </main>
+
+    {{#testSteps}}
+    <div class="modal fade" id="details-step{{i}}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Details of scan on
+                        "{{stepData.stepDescription}}"</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="accordion" id="acc{{i}}">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#acc{{i}}-gen">
+                                    General info
+                                </button>
+                            </h2>
+                            <div id="acc{{i}}-gen" class="accordion-collapse collapse" data-bs-parent="#acc{{i}}">
+                                <div class="accordion-body">
+                                    <p>Scan date: <i>{{formatedDate}}</i></p>
+                                    <p>URL: <a href="{{stepData.axeResults.url}}"><i>{{stepData.axeResults.url}}</i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#acc{{i}}-viol">
+                                    Violations
+                                </button>
+                            </h2>
+                            <div id="acc{{i}}-viol" class="accordion-collapse collapse show" data-bs-parent="#acc{{i}}">
+                                <div class="accordion-body">
+                                    <ul class="nodes-actions">
+{{#stepData.axeResults.violations.0}}
+                                        <li><a href="#violation-no-details" role="button" data-bs-toggle="collapse"
+                                                data-bs-target="#violation-no-details"><i class="bi bi-compass"></i>
+                                                Show nodes</a></li>
+{{/stepData.axeResults.violations.0}}
+                                    </ul>
+                                    <ol>
+                                        {{#stepData.axeResults.violations}}
+                                        <li>
+                                            <ul class="step-context-menu">
+                                                <li><span class="badge text-bg-warning">{{impact}}</span></li>
+                                                <li><span class="badge text-bg-info">{{nodes.length}} nodes</span></li>
+                                            </ul>
+
+                                            <a href="{{helpUrl}}">{{help}}</a>
+
+                                            <div class="collapse" id="violation-no-details">
+                                                <!--<div class="card card-body"> -->
+                                                <div>
+                                                    <ol class="leftbordered-list">
+                                                        {{#nodes}}
+                                                        <li>
+                                                            <h3 class="fs-6">Element source:</h3>
+                                                            <code>{{html}}</code>
+                                                            <h3 class="fs-6">Element location:</h3>
+                                                            {{#target}}
+                                                            <code>{{.}}</code>
+                                                            {{/target}}
+                                                            <h3 class="fs-6">How to fix this:</h3>
+                                                            {{#failureSummary}}
+                                                            <code>{{.}}</code>
+                                                            {{/failureSummary}}
+                                                        </li>
+                                                        {{/nodes}}
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/stepData.axeResults.violations}}
+                                    </ol>
+                                    {{^stepData.axeResults.violations}}
+                                    <p class="nothing">none</p>
+                                    {{/stepData.axeResults.violations}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#acc{{i}}-pass">
+                                    Passes
+                                </button>
+                            </h2>
+                            <div id="acc{{i}}-pass" class="accordion-collapse collapse" data-bs-parent="#acc{{i}}">
+                                <div class="accordion-body">
+                                    <ol>
+                                        {{#stepData.axeResults.passes}}
+                                        <li>
+                                            <ul class="step-context-menu">
+                                                <li><span class="badge text-bg-info">{{nodes.length}} nodes</span></li>
+                                            </ul>
+                                            <a href="{{helpUrl}}">{{help}}</a>
+                                        </li>
+                                        {{/stepData.axeResults.passes}}
+                                    </ol>
+                                    {{^stepData.axeResults.passes}}
+                                    <p class="nothing">none</p>
+                                    {{/stepData.axeResults.passes}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#acc{{i}}-inapp">
+                                    Inapplicable
+                                </button>
+                            </h2>
+                            <div id="acc{{i}}-inapp" class="accordion-collapse collapse" data-bs-parent="#acc{{i}}">
+                                <div class="accordion-body">
+                                    <ol>
+                                        {{#stepData.axeResults.inapplicable}}
+                                        <li><a href="{{helpUrl}}">{{help}}</a></li>
+                                        {{/stepData.axeResults.inapplicable}}
+                                    </ol>
+                                    {{^stepData.axeResults.inapplicable}}
+                                    <p class="nothing">none</p>
+                                    {{/stepData.axeResults.inapplicable}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#acc{{i}}-incom">
+                                    Incomplete
+                                </button>
+                            </h2>
+                            <div id="acc{{i}}-incom" class="accordion-collapse collapse" data-bs-parent="#acc{{i}}">
+                                <div class="accordion-body">
+                                    <ol>
+                                        {{#stepData.axeResults.incomplete}}
+                                        <li>
+                                            <ul class="step-context-menu">
+                                                <li><span class="badge text-bg-warning">{{impact}}</span></li>
+                                                <li><span class="badge text-bg-info">{{nodes.length}} nodes</span></li>
+                                            </ul>
+                                            <a href="{{helpUrl}}">{{help}}</a>
+                                        </li>
+                                        {{/stepData.axeResults.incomplete}}
+                                    </ol>
+                                    {{^stepData.axeResults.incomplete}}
+                                    <p class="nothing">none</p>
+                                    {{/stepData.axeResults.incomplete}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#hasScreenshot}}
+    <div class="modal fade" id="screenshot-step{{i}}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-max">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Screenshot on "{{stepData.stepDescription}}"
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="screenshot"
+                        src="{{#stepData.screenshotBlob}}data:image/png;base64,{{.}}{{/stepData.screenshotBlob}}">
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/hasScreenshot}}
+
+    {{/testSteps}}
+
+
+</body>
+
+</html>
