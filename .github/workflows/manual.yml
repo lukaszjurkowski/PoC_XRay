@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: 'Playwright pipeline for XRay reporting check'
+        description: 'Playwright pipeline for XRay'
         default: 'RunPlaywrightTests'
         required: true
         type: choice
