@@ -32,11 +32,11 @@ jobs:
 
     - name: List test files
       run: |
-        ls -R tests/functional_tests
+        ls -R tests
         
     - name: Run Playwright functional tests
       run: |
-        npx playwright test tests/functional_tests --reporter=json > playwright-report.json
+        npx playwright test tests --reporter=json > playwright-report.json
         # npx playwright test --reporter=json
     
     
