@@ -47,7 +47,13 @@ jobs:
     #   with:
     #     name: playwright-report
     #     path: playwright-report.json
-        
+    
+    - name: Upload Playwright JSON report
+      uses: actions/upload-artifact@v3
+      with:
+        name: playwright-report
+        path: playwright-report.json
+    
 
     - name: Authenticate with Xray
       id: xray-auth
