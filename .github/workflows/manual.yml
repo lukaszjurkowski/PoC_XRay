@@ -29,7 +29,7 @@ jobs:
 
     - name: List test files
       run: |
-        ls -R ../tests/functional_tests
+        ls -R ../
         
     - name: Run Playwright functional tests
       run: |
