@@ -29,7 +29,7 @@ jobs:
 
     - name: List test files
       run: |
-        ls -R ../PoC_XRay/
+        ls -R ./
         
     - name: Run Playwright functional tests
       run: |
