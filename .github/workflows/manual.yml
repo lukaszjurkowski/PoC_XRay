@@ -26,6 +26,10 @@ jobs:
         npm install -D @playwright/test@latest
         npx playwright install
         npx @playwright/test --version
+
+    - name: List test files
+      run: |
+        ls -R ./tests/functional_tests
         
     - name: Run Playwright functional tests
       run: |
