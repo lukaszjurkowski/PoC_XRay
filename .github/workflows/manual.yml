@@ -20,6 +20,9 @@ jobs:
       checks: write
       pull-requests: write
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
     - name: Playwright installation
       run: |
         npm init -y
@@ -33,7 +36,7 @@ jobs:
         
     - name: Run Playwright functional tests
       run: |
-        npx playwright test tests/functional_tests --reporter=json
+        npx playwright test tests/functional_tests --reporter=json > playwright-report.json
         # npx playwright test --reporter=json
     
     
