@@ -36,16 +36,10 @@ jobs:
         
     - name: Run Playwright functional tests
       run: |
-        npx playwright test ./tests --reporter=json > playwright-report.json || true
+        # npx playwright test ./tests --reporter=json > playwright-report.json || true
+        npx playwright test ./tests --reporter=junit | true
         # npx playwright test --reporter=json
         set -e
-
-    
-    # - name: Save report as artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: playwright-report
-    #     path: playwright-report.json
     
     - name: Upload Playwright JSON report
       uses: actions/upload-artifact@v4
@@ -72,10 +66,17 @@ jobs:
           }
         }' > info.json
 
-    - name: Upload results to Xray
-      run: |   
-        curl -X POST https://xray.cloud.getxray.app/api/v2/import/execution/playwright \
+    # - name: Upload results to Xray
+    #   run: |   
+    #     curl -X POST https://xray.cloud.getxray.app/api/v2/import/execution/playwright \
+    #       -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
+    #       -F "info=@info.json;type=application/json" \
+    #       -F "results=@playwright-report.json;type=application/json"
+    
+    - name: Upload results to Xray (JUnit)
+      run: |
+        curl -X POST https://xray.cloud.getxray.app/api/v2/import/execution/junit \
           -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-          -F "info=@info.json;type=application/json" \
-          -F "results=@playwright-report.json;type=application/json"
+          -F "results=@playwright-report.xml;type=application/xml"
+
 
