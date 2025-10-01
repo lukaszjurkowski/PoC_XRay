@@ -36,6 +36,9 @@ export class NewApplicationPage {
     private submitButton: Locator;
     private sponsorDetailsLink: Locator;
     private parentsLearningLink: Locator;
+    private childcareGrantLink: Locator;
+    private adultDependantsLink: Locator;
+    private disabledStudentAllowanceLink: Locator;
 
     constructor(page: Page, accessibilityScanResults: AccessibilityTestCase | undefined) {
         this.page = page;
@@ -73,6 +76,9 @@ export class NewApplicationPage {
         this.submitButton = this.page.getByRole('button', { name: 'Submit your application' });
         this.sponsorDetailsLink = this.page.getByRole('link', { name: 'Sponsor details' });
         this.parentsLearningLink = this.page.getByRole('link', { name: 'Parents\' Learning Allowance' });
+        this.childcareGrantLink = this.page.getByRole('link', { name: 'Childcare Grant' });
+        this.adultDependantsLink = this.page.getByRole('link', { name: 'Adult Dependants\' Grant' });
+        this.disabledStudentAllowanceLink = this.page.getByRole('link', { name: 'Disabled Students\' Allowance' });
     }
     
     @step("Go to 'About you' section'")
@@ -135,6 +141,22 @@ export class NewApplicationPage {
         await this.parentsLearningLink.click();
     }
 
+    @step("Go to 'Childcare Grant' section'")
+    async goToChildcareGrantSection() {
+        await this.childcareGrantLink.click();
+    }
+
+    @step("Go to 'Adult Dependants Grant' section'")
+    async goToAdultDependantsSection() {
+        expect(this.adultDependantsLink).toBeVisible({timeout: 20000});
+        await this.adultDependantsLink.click();
+    }
+
+    @step("Go to 'Disabled Students Allowance' section")
+    async goToDisabledStudentsAllowanceSection() {
+        await this.disabledStudentAllowanceLink.click();
+    }
+
     @step("Fill preamble steps")
     async fillPreambleSteps(){
         await expect(this.firstDayTitle).toBeVisible({ timeout: 20000 });
@@ -171,18 +193,20 @@ export class NewApplicationPage {
 
     @step("Submit the application form")
     async submitForm(submit_password: string) {
+        await expect(this.continueButton).toBeVisible({timeout: 30000});
         await this.continueButton.click();
 
-        await expect(this.beforeSubmitTitle).toBeVisible({ timeout: 20000 });
+        await expect(this.beforeSubmitTitle).toBeVisible({ timeout: 50000 });
         await this.continueButton.click();
 
-        await expect(this.enteringTitle).toBeVisible({ timeout: 20000 });
+        await expect(this.enteringTitle).toBeVisible({ timeout: 50000 });
         await this.continueButton.click();
         
-        await expect(this.responsibilityTitle).toBeVisible({ timeout: 20000 });
+        await expect(this.responsibilityTitle).toBeVisible({ timeout: 50000 });
+        await expect(this.continueButton).toBeEnabled({timeout: 50000});
         await this.continueButton.click();
 
-        await expect(this.submitTitle).toBeVisible({ timeout: 20000 });
+        await expect(this.submitTitle).toBeVisible({ timeout: 50000 });
         await this.yesUnderstoodRadioButton.click();
         // TODO: submitting disabled by purpose - to not break the flow after successful submitting
         // await this.submitPasswordInput.fill(submit_password);

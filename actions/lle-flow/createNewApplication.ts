@@ -1,18 +1,24 @@
 import { Page } from '@playwright/test';
-import { HomePage } from '../../pages/lle-pages/homePage';
-import { HomePage_ApplicationChooser } from '../../pages/shared-pages/homePage_ApplicationChooser';
-import { NewApplicationPage } from '../../pages/lle-pages/newApplicationPage';
+import { AccessibilityTestCase } from '../../accessibility/accessibilityHandler';
 import { AboutYouPage } from '../../pages/lle-pages/aboutYouPage';
-import { YourCoursePage } from '../../pages/lle-pages/yourCoursePage';
+import { AdditionalContactPage } from '../../pages/lle-pages/additionalContactPage';
+import { AdultDependantGrantPage } from '../../pages/lle-pages/adultDependantsGrantPage';
+import { BankDetailsPage } from '../../pages/lle-pages/bankDetailsPage';
+import { ChildcareGrantPage } from '../../pages/lle-pages/childcareGrantPage';
+import { DisabledStudentsAllowancePage } from '../../pages/lle-pages/disabledStudentsAllowancePage';
+import { HomePage } from '../../pages/lle-pages/homePage';
+import { HouseholdIncomePage } from '../../pages/lle-pages/householdIncomePage';
+import { MaintenanceLoanPage } from '../../pages/lle-pages/maintenanceLoanPage';
+import { NationalInsuranceNumberPage } from '../../pages/lle-pages/nationalInsuranceNumberPage';
+import { NewApplicationPage } from '../../pages/lle-pages/newApplicationPage';
+import { ParentsLearningAllowancePage } from '../../pages/lle-pages/parentsLearningAllowancePage';
 import { PreviousStudyPage } from '../../pages/lle-pages/previousStudyPage';
 import { ResidencyPage } from '../../pages/lle-pages/residencyPage';
-import { HouseholdIncomePage } from '../../pages/lle-pages/householdIncomePage';
+import { SponsorDetailsPage } from '../../pages/lle-pages/sponsorDetailsPage';
 import { TuitionFeeLoanPage } from '../../pages/lle-pages/tuitionFeeLoanPage';
-import { MaintenanceLoanPage } from '../../pages/lle-pages/maintenanceLoanPage';
-import { AdditionalContactPage } from '../../pages/lle-pages/additionalContactPage';
-import { BankDetailsPage } from '../../pages/lle-pages/bankDetailsPage';
-import { NationalInsuranceNumberPage } from '../../pages/lle-pages/nationalInsuranceNumberPage';
-import { AccessibilityTestCase } from '../../accessibility/accessibilityHandler';
+import { YourCoursePage } from '../../pages/lle-pages/yourCoursePage';
+import { HomePage_ApplicationChooser } from '../../pages/shared-pages/homePage_ApplicationChooser';
+
 
 export async function createNewApplication(page: Page, data: any, submit_password: string, accessibilityScanResults?: AccessibilityTestCase) {
     const homePage = new HomePage(page, accessibilityScanResults);
@@ -28,6 +34,11 @@ export async function createNewApplication(page: Page, data: any, submit_passwor
     const additionalContactPage = new AdditionalContactPage(page, data);
     const bankDetailsPage = new BankDetailsPage(page);
     const nationalInsuranceNumberPage = new NationalInsuranceNumberPage(page);
+    const sponsorDetailsPage = new SponsorDetailsPage(page, accessibilityScanResults);
+    const parentsLearningAllowancePage = new ParentsLearningAllowancePage(page, accessibilityScanResults);
+    const childcareGrantPage = new ChildcareGrantPage(page, accessibilityScanResults);
+    const adultDependantGrantPage = new AdultDependantGrantPage(page, accessibilityScanResults);
+    const disabledStudentsAllowancePage = new DisabledStudentsAllowancePage(page, accessibilityScanResults);
     
     await homePage.goToApplyForFunding();
     await homePage_ApplicationChooser.goToLLEApplication();
@@ -63,6 +74,21 @@ export async function createNewApplication(page: Page, data: any, submit_passwor
     
     await newApplicationPage.goToNationalInsuranceNumberSection();
     await nationalInsuranceNumberPage.fillNationalInsuranceNumberSteps();
+
+    await newApplicationPage.goToSponsorDetailSection();
+    await sponsorDetailsPage.fillSponsorDetailsSteps();
+
+    await newApplicationPage.goToParentsLearningSection();
+    await parentsLearningAllowancePage.fillParentsLearningSteps();
+
+    await newApplicationPage.goToChildcareGrantSection();
+    await childcareGrantPage.fillChildcareGrantSteps();
+
+    await newApplicationPage.goToAdultDependantsSection();
+    await adultDependantGrantPage.fillAdultDependantsGrantStep();
+
+    await newApplicationPage.goToDisabledStudentsAllowanceSection();
+    await disabledStudentsAllowancePage.fillDisabledStudentsAllowanceSteps();
 
     await newApplicationPage.submitForm(submit_password);
 }
